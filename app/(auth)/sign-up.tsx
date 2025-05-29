@@ -135,6 +135,7 @@ export default function SignUpScreen() {
             <Image
               source={require("../../assets/images/pp2.png")}
               style={styles.illustration}
+              contentFit="contain"
             />
           </View>
           <View>

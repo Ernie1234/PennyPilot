@@ -81,6 +81,7 @@ export default function Page() {
             <Image
               source={require("../../assets/images/pp3.png")}
               style={styles.illustration}
+              contentFit="contain"
             />
           </View>
           <View>
