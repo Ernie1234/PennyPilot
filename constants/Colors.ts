@@ -49,13 +49,40 @@ const oceanTheme = {
   card: "#FFFFFF",
   shadow: "#000000",
 };
+const skyTheme = {
+  primary: "#0277BD",
+  background: "#E1F5FE",
+  text: "#01579B",
+  border: "#B3E5FC",
+  white: "#FFFFFF",
+  textLight: "#4FC3F7",
+  expense: "#EF5350",
+  income: "#26A69A",
+  card: "#FFFFFF",
+  shadow: "#000000",
+};
+
+const pennyPilotTheme = {
+  primary: "#6A4C93", // Soft purple (friendly + finance)
+  background: "#F8F1FF", // Light lavender (calm)
+  text: "#3A2E5A", // Dark purple (readable)
+  border: "#D4C4E8", // Light purple border
+  white: "#FFFFFF", // Pure white
+  textLight: "#9C89B8", // Lighter purple (secondary text)
+  expense: "#FF6B6B", // Coral red (expenses)
+  income: "#4ECDC4", // Mint green (income)
+  card: "#FFFFFF", // White cards
+  shadow: "rgba(106, 76, 147, 0.2)", // Soft purple shadow
+};
 
 export const THEMES = {
   coffee: coffeeTheme,
   forest: forestTheme,
   purple: purpleTheme,
   ocean: oceanTheme,
+  ppTheme: pennyPilotTheme,
+  skyTheme: skyTheme,
 };
 
 // 👇 change this to switch theme
-export const COLORS = THEMES.forest;
+export const COLORS = THEMES.ppTheme;
