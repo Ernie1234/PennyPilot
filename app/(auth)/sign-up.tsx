@@ -133,7 +133,7 @@ export default function SignUpScreen() {
             }}
           >
             <Image
-              source={require("../../assets/images/ppLogo.png")}
+              source={require("../../assets/images/pp2.png")}
               style={styles.illustration}
             />
           </View>

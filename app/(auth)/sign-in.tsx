@@ -79,7 +79,7 @@ export default function Page() {
             }}
           >
             <Image
-              source={require("../../assets/images/pp2.png")}
+              source={require("../../assets/images/pp3.png")}
               style={styles.illustration}
             />
           </View>
