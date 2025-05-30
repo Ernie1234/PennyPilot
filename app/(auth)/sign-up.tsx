@@ -53,6 +53,8 @@ export default function SignUpScreen() {
       if (err.errors?.[0]?.code === "form_password_incorrect") {
         setError("Password is incorrect. Please try again!");
         // console.error(JSON.stringify(err, null, 2));
+      } else if (err.errors?.[0]?.code === "form_identifier_exists") {
+        setError("This email already exist. Please try another one!");
       } else {
         setError("An error occured. Please try again!");
       }

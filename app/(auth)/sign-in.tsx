@@ -81,6 +81,8 @@ export default function Page() {
               alignItems: "center",
             }}
           >
+            <Text style={[styles.title, { marginVertical: 0 }]}>Sign in</Text>
+            <Text style={styles.subTitle}>Welcome back to Piggy Pilot</Text>
             <Image
               source={require("../../assets/images/pp3.png")}
               style={styles.illustration}
@@ -88,7 +90,6 @@ export default function Page() {
             />
           </View>
           <View>
-            <Text style={styles.title}>Sign in</Text>
             {error ? (
               <View style={styles.errorBox}>
                 <Ionicons
@@ -129,7 +130,7 @@ export default function Page() {
             <View style={styles.footerContainer}>
               <Text style={styles.footerText}>Don&apos;t have an account?</Text>
               <Link href="/sign-up">
-                <Text style={styles.linkText}>Sign in</Text>
+                <Text style={styles.linkText}>Sign Up</Text>
               </Link>
             </View>
           </View>
@@ -138,3 +139,5 @@ export default function Page() {
     </KeyboardAvoidingView>
   );
 }
+
+// password  -  Joe@2791

@@ -1,5 +1,28 @@
-import { Stack } from "expo-router/stack";
+import { Tabs } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 
-export default function Layout() {
-  return <Stack />;
+export default function TabsLayout() {
+  return (
+    <Tabs screenOptions={{ headerShown: false }}>
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Profile",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" color={color} size={size} />
+          ),
+        }}
+      />
+      {/* Add more tabs as needed */}
+    </Tabs>
+  );
 }

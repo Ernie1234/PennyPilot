@@ -20,6 +20,13 @@ export const styles = StyleSheet.create({
     marginVertical: 15,
     textAlign: "center",
   },
+  subTitle: {
+    fontSize: 18,
+    fontWeight: "normal",
+    color: COLORS.text,
+    marginVertical: 5,
+    textAlign: "center",
+  },
   input: {
     backgroundColor: COLORS.white,
     borderRadius: 12,
