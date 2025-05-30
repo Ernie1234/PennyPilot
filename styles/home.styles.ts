@@ -84,13 +84,15 @@ export const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 20,
     shadowColor: COLORS.shadow,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: COLORS.textLight,
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 3,
     },
     shadowOpacity: 0.1,
     shadowRadius: 3,
-    elevation: 3,
+    elevation: 10,
   },
   balanceTitle: {
     fontSize: 16,
@@ -108,7 +110,7 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   balanceStatItem: {
-    flex: 1,
+    // flex: 1,
     alignItems: "center",
   },
   statDivider: {
@@ -146,6 +148,41 @@ export const styles = StyleSheet.create({
     elevation: 2,
   },
   transactionContent: {
+    flex: 1,
+    flexDirection: "row",
+    padding: 15,
+    alignItems: "center",
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 40,
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    padding: 20,
+  },
+  errorText: {
+    fontSize: 16,
+    color: COLORS.expense,
+    marginLeft: 8,
+  },
+  emptyText: {
+    fontSize: 18,
+    fontWeight: "500",
+    color: COLORS.primary,
+    marginTop: 16,
+  },
+  emptySubtext: {
+    fontSize: 14,
+    color: COLORS.textLight,
+    marginTop: 4,
+  },
+  Content: {
     flex: 1,
     flexDirection: "row",
     padding: 15,

@@ -72,7 +72,7 @@ const pennyPilotTheme = {
   expense: "#FF6B6B", // Coral red (expenses)
   income: "#4ECDC4", // Mint green (income)
   card: "#FFFFFF", // White cards
-  shadow: "rgba(106, 76, 147, 0.2)", // Soft purple shadow
+  shadow: "rgba(106, 76, 147, 0.8)", // Soft purple shadow
 };
 
 export const THEMES = {

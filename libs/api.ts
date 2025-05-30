@@ -1,20 +1,50 @@
 import axios from "axios";
-import { useAuth } from "@clerk/clerk-expo";
 
 const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 
-export const api = axios.create({
+// Create a basic axios instance without interceptors
+const api = axios.create({
   baseURL: API_BASE_URL,
+  timeout: 10000,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-// Add auth interceptor
-api.interceptors.request.use(async (config) => {
-  const { getToken } = useAuth();
-  const token = await getToken();
+// Create a function that will return an authenticated instance
+export const getAuthenticatedApi = async (
+  getToken: () => Promise<string | null>
+) => {
+  // Clone the base instance to avoid mutating the original
+  const authenticatedApi = axios.create(api.defaults);
 
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  // Add auth interceptor
+  authenticatedApi.interceptors.request.use(async (config) => {
+    try {
+      const token = await getToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch (error) {
+      console.error("Failed to get auth token:", error);
+    }
+    return config;
+  });
 
-  return config;
-});
+  // Add error handling interceptor
+  authenticatedApi.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error.response) {
+        console.error("API Error:", error.response.status, error.response.data);
+      } else {
+        console.error("Network Error:", error.message);
+      }
+      return Promise.reject(error);
+    }
+  );
+
+  return authenticatedApi;
+};
+
+export default api;
