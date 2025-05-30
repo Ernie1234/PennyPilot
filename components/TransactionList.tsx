@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   FlatList,
   ActivityIndicator,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 import { useAuth } from "@clerk/clerk-expo";
 
@@ -13,6 +14,7 @@ import { styles } from "@/styles/home.styles";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "@/constants/colors";
 import { formatMongoDate } from "@/libs/utils";
+import { useRouter } from "expo-router";
 
 export const CATEGORY_ICONS = {
   "Food & Drinks": "fast-food",
@@ -31,9 +33,24 @@ export const TransactionList = () => {
     isLoading,
     error,
     isError,
+    refetch,
   } = useTransactions(userId!);
   const { mutate: deleteTransaction } = useDeleteTransaction(userId!);
-  if (isLoading) {
+  const [refreshing, setRefreshing] = useState(false);
+  const router = useRouter();
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await refetch();
+    } catch (error) {
+      console.log("Error refreshing transactions: ", error);
+    } finally {
+      setRefreshing(false);
+    }
+  };
+
+  if (isLoading && !refreshing) {
     return <ActivityIndicator size="large" color={COLORS.primary} />;
   }
 
@@ -52,6 +69,13 @@ export const TransactionList = () => {
         <Ionicons name="receipt-outline" size={40} color={COLORS.textLight} />
         <Text style={styles.emptyText}>No transactions yet!</Text>
         <Text style={styles.emptySubtext}>Add your first transaction</Text>
+        <TouchableOpacity
+          style={[styles.addButton, { marginTop: 16 }]}
+          onPress={() => router.push("/profile")}
+        >
+          <Ionicons name="add" size={20} color="#fff" />
+          <Text style={styles.addButtonText}>Add expenses</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -59,27 +83,40 @@ export const TransactionList = () => {
   console.log("Error in transaction list: ", error);
 
   type TTransactionCategory = keyof typeof CATEGORY_ICONS;
+  type IoniconsName = React.ComponentProps<typeof Ionicons>["name"];
+  const isKnownCategory = (
+    category: string
+  ): category is TTransactionCategory => {
+    return Object.keys(CATEGORY_ICONS).includes(category);
+  };
 
-  function isKnownCategory(category: string): category is TTransactionCategory {
-    return category in CATEGORY_ICONS;
-  }
-
+  const getCategoryIcon = (category: string): IoniconsName => {
+    return isKnownCategory(category) ? CATEGORY_ICONS[category] : "pricetags";
+  };
   return (
     <FlatList
       style={styles.transactionsList}
       contentContainerStyle={styles.transactionsListContent}
       data={transactions}
-      keyExtractor={(item) => item._id}
+      keyExtractor={(item) => item.id}
+      showsVerticalScrollIndicator={false}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          tintColor={COLORS.primary}
+        />
+      }
       renderItem={({ item }) => {
         const isIncome = item.amount > 0;
         const amountColor = isIncome ? COLORS.income : COLORS.expense;
 
-        const iconName = isKnownCategory(item.category)
-          ? CATEGORY_ICONS[item.category]
-          : "pricetags";
+        const dateToFormat = item.updatedAt || new Date();
+
+        const iconName = getCategoryIcon(item.category);
 
         return (
-          <View style={styles.transactionCard} key={item._id}>
+          <View style={styles.transactionCard}>
             <TouchableOpacity style={styles.transactionContent}>
               <View style={styles.categoryIconContainer}>
                 <Ionicons name={iconName} size={22} color={amountColor} />
@@ -97,13 +134,13 @@ export const TransactionList = () => {
                   {isIncome ? "+" : "-"} ₦{item.amount.toFixed(2)}
                 </Text>
                 <Text style={styles.transactionDate}>
-                  {formatMongoDate(item.date)}
+                  {formatMongoDate(dateToFormat)}
                 </Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.deleteButton}
-              onPress={() => deleteTransaction(item._id)}
+              onPress={() => deleteTransaction(item.id)}
             >
               <Ionicons name="trash-outline" size={20} color={COLORS.expense} />
             </TouchableOpacity>
@@ -113,24 +150,3 @@ export const TransactionList = () => {
     />
   );
 };
-
-{
-  /* <View
-style={{
-  padding: 16,
-  flexDirection: "row",
-  justifyContent: "space-between",
-}}
->
-<View>
-  <Text style={{ fontSize: 16 }}>{item.description}</Text>
-  <Text style={{ color: "gray" }}>{item.category}</Text>
-</View>
-<View style={{ alignItems: "flex-end" }}>
-  <Text style={{ fontSize: 16 }}>${item.amount.toFixed(2)}</Text>
-  <TouchableOpacity onPress={() => deleteTransaction(item._id)}> 
-    <Text style={{ color: "red" }}>Delete</Text>
-  </TouchableOpacity>
-</View>
-</View> */
-}

@@ -86,7 +86,7 @@ export default function Page() {
           <BalanceCard summary={{ income: 400, balance: 500, expenses: 800 }} />
 
           <View style={styles.transactionsContainer}>
-            <Text style={styles.sectionTitle}>Recent Transaction</Text>
+            <Text style={styles.sectionTitle}>Recent Expenses</Text>
           </View>
         </View>
 

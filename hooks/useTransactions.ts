@@ -5,13 +5,14 @@ import { CATEGORY_ICONS } from "@/components/TransactionList";
 type TTransactionCategory = keyof typeof CATEGORY_ICONS;
 
 interface ITransaction {
-  _id: string;
+  id: string;
   userId: string;
   amount: number;
   title: string;
   description: string;
   category: TTransactionCategory | string;
-  date: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface CreateTransactionDto {
