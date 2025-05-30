@@ -71,7 +71,7 @@ export const TransactionList = () => {
         <Text style={styles.emptySubtext}>Add your first transaction</Text>
         <TouchableOpacity
           style={[styles.addButton, { marginTop: 16 }]}
-          onPress={() => router.push("/profile")}
+          onPress={() => router.push("/create")}
         >
           <Ionicons name="add" size={20} color="#fff" />
           <Text style={styles.addButtonText}>Add expenses</Text>
