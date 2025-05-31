@@ -1,6 +1,7 @@
 import { ClerkProvider } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { Slot } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 
 import { QueryProvider } from "@/providers/queryProvider";
 
@@ -18,6 +19,7 @@ export default function RootLayout() {
       <QueryProvider>
         <Slot />
       </QueryProvider>
+      <StatusBar style="dark" />
     </ClerkProvider>
   );
 }
